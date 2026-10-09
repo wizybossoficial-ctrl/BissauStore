@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "All Products",
+    "categories": "Categories",
+    "flashDeals": "Flash Deals",
+    "searchPlaceholder": "Search products, food, smartphones...",
+    "cart": "Cart",
+    "admin": "Admin Panel",
+    "contact": "Bissau Contact"
+  },
+  "categories": {
+    "all": "All Categories",
+    "eletronicos": "Electronics & Phones",
+    "moda": "Fashion & Traditional Wear",
+    "alimentacao": "Food & Groceries",
+    "eletrodomesticos": "Appliances & Solar",
+    "beleza": "Beauty & Cosmetics"
+  },
+  "hero": {
+    "tag": "The premier online marketplace for Guinea-Bissau",
+    "title": "Shop easily and quickly in Bissau",
+    "subtitle": "Pay with Orange Money, MTN MoMo, or cash on delivery. Fast delivery to all Bissau neighborhoods.",
+    "cta": "Explore Products",
+    "whatsappCta": "Order via WhatsApp"
+  },
+  "trust": {
+    "orangeMoney": "Orange Money & MTN MoMo",
+    "orangeMoneyDesc": "100% secure mobile payment",
+    "delivery": "Fast Delivery in Bissau",
+    "deliveryDesc": "Directly to your home or shop",
+    "quality": "Guaranteed Quality",
+    "qualityDesc": "Authentic and verified goods",
+    "support": "Local Customer Care",
+    "supportDesc": "Support via WhatsApp and phone"
+  },
+  "products": {
+    "featuredTitle": "Featured Products",
+    "flashTitle": "⚡ Flash Deals in Bissau",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "orderWhatsApp": "Order via WhatsApp",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "reviews": "reviews",
+    "viewDetails": "View Details"
+  },
+  "cart": {
+    "title": "My Shopping Cart",
+    "empty": "Your cart is empty",
+    "emptySubtitle": "Add items to your cart to start shopping.",
+    "continueShopping": "Continue Shopping",
+    "summary": "Order Summary",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee (Bissau)",
+    "total": "Total Amount",
+    "checkout": "Proceed to Checkout",
+    "remove": "Remove",
+    "itemsCount": "items"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "deliveryInfo": "Bissau Delivery Information",
+    "fullName": "Full Name",
+    "phone": "Phone Number (+245)",
+    "phoneHint": "Used for confirmation and Orange Money",
+    "bairro": "Neighborhood in Bissau",
+    "selectBairro": "Select your neighborhood",
+    "landmark": "Landmark / Location Reference",
+    "landmarkPlaceholder": "E.g. Near the market, next to Galp station, yellow house",
+    "paymentMethod": "Payment Method",
+    "orangeMoney": "Orange Money Guinea-Bissau",
+    "orangeMoneyHint": "You will receive a USSD prompt on your phone",
+    "momo": "MTN Mobile Money",
+    "momoHint": "Quick payment via MTN MoMo wallet",
+    "card": "Bank Card / GIM-UEMOA (Visa, Mastercard)",
+    "cod": "Cash on Delivery (Cash or MoMo to courier)",
+    "confirmOrder": "Confirm and Pay",
+    "processing": "Processing..."
+  },
+  "order": {
+    "title": "Order Details",
+    "status": "Order Status",
+    "orderNumber": "Order Number",
+    "date": "Date",
+    "paidWith": "Paid via",
+    "deliveryTo": "Deliver to",
+    "contact": "Contact",
+    "items": "Order Items",
+    "whatsappFollowUp": "Follow up on WhatsApp",
+    "statusPending": "Pending",
+    "statusPaid": "Paid Successfully",
+    "statusProcessing": "Packing in Warehouse",
+    "statusInDelivery": "Out for Delivery in Bissau",
+    "statusCompleted": "Delivered Successfully"
+  }
+}
