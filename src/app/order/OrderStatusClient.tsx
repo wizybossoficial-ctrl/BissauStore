@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useStore } from '@/context/StoreContext';
 import { formatXOF, formatDate } from '@/lib/formatters';
@@ -19,11 +19,11 @@ import {
   ShoppingBag
 } from 'lucide-react';
 
-export default function OrderStatusPage() {
-  const params = useParams();
+export default function OrderStatusClient() {
+  const searchParams = useSearchParams();
   const { orders, language, t } = useStore();
 
-  const order = orders.find((o) => o.id === params.id);
+  const order = orders.find((o) => o.id === searchParams.get('id'));
 
   if (!order) {
     return (

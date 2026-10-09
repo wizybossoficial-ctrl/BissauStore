@@ -99,7 +99,7 @@ export default function CheckoutPage() {
     addOrder(newOrder);
     clearCart();
     setIsPaymentModalOpen(false);
-    router.push(`/order/${newOrder.id}`);
+    router.push(`/order?id=${newOrder.id}`);
   };
 
   return (

@@ -230,7 +230,7 @@ export default function AdminDashboardPage() {
                   {/* Action Link */}
                   <td className="py-4 px-2 text-right">
                     <Link
-                      href={`/order/${order.id}`}
+                      href={`/order?id=${order.id}`}
                       className="p-1.5 inline-block text-gray-400 hover:text-brand-orange hover:bg-orange-50 rounded-lg transition"
                       title="Ver página de rastreio"
                     >
