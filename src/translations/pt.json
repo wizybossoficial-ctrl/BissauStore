@@ -7,7 +7,9 @@
     "searchPlaceholder": "Pesquisar produtos, alimentos, telemóveis...",
     "cart": "Carrinho",
     "admin": "Painel Gestor",
-    "contact": "Contacto Bissau"
+    "contact": "Contacto Bissau",
+    "signIn": "Entrar",
+    "createAccount": "Criar conta"
   },
   "categories": {
     "all": "Todas as Categorias",
@@ -93,5 +95,33 @@
     "statusProcessing": "Em Preparação no Armazém",
     "statusInDelivery": "Em Rota de Entrega em Bissau",
     "statusCompleted": "Entregue com Sucesso"
+  },
+  "account": {
+    "signInTitle": "Bem-vindo de volta",
+    "signInSubtitle": "Entre na sua conta BissauStore.",
+    "signUpTitle": "Junte-se à BissauStore",
+    "signUpSubtitle": "Crie uma conta para comprar ou vender na Guiné-Bissau.",
+    "client": "Quero comprar",
+    "clientDescription": "Descubra produtos e acompanhe os seus pedidos.",
+    "vendor": "Quero vender",
+    "vendorDescription": "Apresente os seus produtos a clientes em Bissau.",
+    "fullName": "Nome completo",
+    "storeName": "Nome da loja",
+    "email": "E-mail",
+    "phone": "Telefone (+245)",
+    "neighborhood": "Bairro",
+    "category": "O que pretende vender?",
+    "password": "Palavra-passe",
+    "signInAction": "Entrar",
+    "signUpAction": "Criar conta",
+    "localOnlyNotice": "Esta é uma conta temporária para demonstração: fica guardada apenas neste navegador e não deve ser usada com uma palavra-passe real.",
+    "creatingAccount": "A criar conta...",
+    "signingIn": "A entrar...",
+    "accountCreated": "Conta criada com sucesso.",
+    "accountCreationError": "Não foi possível criar a conta neste navegador.",
+    "signInError": "E-mail ou palavra-passe incorretos.",
+    "haveAccount": "Já tem uma conta?",
+    "noAccount": "Ainda não tem uma conta?",
+    "backHome": "Voltar à loja"
   }
 }

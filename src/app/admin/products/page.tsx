@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { formatXOF } from '@/lib/formatters';
 import { Product, Category } from '@/lib/types';
+import VendorAdminGate from '@/components/VendorAdminGate';
 import { ArrowLeft, Plus, Package, Trash2, X, Check, Sparkles } from 'lucide-react';
 
 export default function AdminProductsPage() {
@@ -59,7 +60,8 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    <VendorAdminGate>
+      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -311,6 +313,7 @@ export default function AdminProductsPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </VendorAdminGate>
   );
 }

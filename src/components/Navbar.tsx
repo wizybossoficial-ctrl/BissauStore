@@ -1,16 +1,22 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useStore } from '@/context/StoreContext';
-import { ShoppingBag, Search, Menu, X, Globe, PhoneCall, LayoutDashboard } from 'lucide-react';
+import { getCurrentLocalAccount } from '@/lib/localAuth';
+import { ShoppingBag, Search, Menu, X, Globe, PhoneCall, LayoutDashboard, UserRound } from 'lucide-react';
 
 export default function Navbar() {
   const { language, setLanguage, t, cartCount, searchQuery, setSearchQuery, setSelectedCategory } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isVendor, setIsVendor] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    setIsVendor(getCurrentLocalAccount()?.role === 'vendor');
+  }, [pathname]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,14 +108,30 @@ export default function Navbar() {
 
         {/* Action Buttons: Cart & Menu */}
         <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-          {/* Admin Link (Desktop) */}
-          <Link
-            href="/admin"
-            className="hidden md:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
-          >
-            <LayoutDashboard className="w-4 h-4 text-gray-600" />
-            <span>{t.nav.admin}</span>
-          </Link>
+          <div className="hidden md:flex items-center gap-2">
+            <Link
+              href="/sign-in"
+              className="px-2 py-2 text-xs font-semibold text-gray-700 hover:text-brand-orange transition"
+            >
+              {t.nav.signIn}
+            </Link>
+            <Link
+              href="/sign-up"
+              className="px-3 py-2 text-xs font-bold text-white bg-brand-orange hover:bg-orange-600 rounded-lg shadow-sm transition"
+            >
+              {t.nav.createAccount}
+            </Link>
+          </div>
+
+          {isVendor && (
+            <Link
+              href="/admin"
+              className="hidden md:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+            >
+              <LayoutDashboard className="w-4 h-4 text-gray-600" />
+              <span>{t.nav.admin}</span>
+            </Link>
+          )}
 
           {/* Cart Icon */}
           <Link
@@ -184,13 +206,30 @@ export default function Navbar() {
 
           <div className="border-t border-gray-100 pt-3 flex flex-col gap-2">
             <Link
-              href="/admin"
+              href="/sign-in"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
             >
-              <LayoutDashboard className="w-4 h-4 text-gray-500" />
-              {t.nav.admin}
+              <UserRound className="w-4 h-4 text-gray-500" />
+              {t.nav.signIn}
             </Link>
+            <Link
+              href="/sign-up"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-brand-orange hover:bg-orange-50 rounded-lg"
+            >
+              {t.nav.createAccount}
+            </Link>
+            {isVendor && (
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
+              >
+                <LayoutDashboard className="w-4 h-4 text-gray-500" />
+                {t.nav.admin}
+              </Link>
+            )}
           </div>
         </div>
       )}

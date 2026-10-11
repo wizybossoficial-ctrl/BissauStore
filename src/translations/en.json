@@ -7,7 +7,9 @@
     "searchPlaceholder": "Search products, food, smartphones...",
     "cart": "Cart",
     "admin": "Admin Panel",
-    "contact": "Bissau Contact"
+    "contact": "Bissau Contact",
+    "signIn": "Sign in",
+    "createAccount": "Create account"
   },
   "categories": {
     "all": "All Categories",
@@ -93,5 +95,33 @@
     "statusProcessing": "Packing in Warehouse",
     "statusInDelivery": "Out for Delivery in Bissau",
     "statusCompleted": "Delivered Successfully"
+  },
+  "account": {
+    "signInTitle": "Welcome back",
+    "signInSubtitle": "Sign in to your BissauStore account.",
+    "signUpTitle": "Join BissauStore",
+    "signUpSubtitle": "Create an account to shop or sell in Guinea-Bissau.",
+    "client": "I want to shop",
+    "clientDescription": "Discover products and keep track of your orders.",
+    "vendor": "I want to sell",
+    "vendorDescription": "Showcase your products to customers in Bissau.",
+    "fullName": "Full name",
+    "storeName": "Store name",
+    "email": "Email",
+    "phone": "Phone (+245)",
+    "neighborhood": "Neighborhood",
+    "category": "What would you like to sell?",
+    "password": "Password",
+    "signInAction": "Sign in",
+    "signUpAction": "Create account",
+    "localOnlyNotice": "This is a temporary demo account: it is stored only in this browser and must not use a real password.",
+    "creatingAccount": "Creating account...",
+    "signingIn": "Signing in...",
+    "accountCreated": "Account created successfully.",
+    "accountCreationError": "The account could not be created in this browser.",
+    "signInError": "Incorrect email or password.",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account yet?",
+    "backHome": "Back to shop"
   }
 }
