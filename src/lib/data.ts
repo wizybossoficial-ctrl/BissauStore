@@ -1,5 +1,7 @@
 import { Product, Order } from './types';
 
+export const DEFAULT_VENDOR_EMAIL = 'vendas@bissaustore.gw';
+
 export const BISSAU_BAIRROS = [
   'Bissau Velho',
   'Praça dos Heróis',
@@ -22,7 +24,7 @@ export const BISSAU_BAIRROS = [
   'Prabis (Arredores)',
 ];
 
-export const INITIAL_PRODUCTS: Product[] = [
+const SEED_PRODUCTS: Product[] = [
   {
     id: 'prod-1',
     name: 'Smartphone Samsung Galaxy A15 (128GB, 4G/LTE)',
@@ -296,6 +298,11 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
 ];
 
+export const INITIAL_PRODUCTS: Product[] = SEED_PRODUCTS.map((p) => ({
+  ...p,
+  vendorEmail: p.vendorEmail ?? DEFAULT_VENDOR_EMAIL,
+}));
+
 export const ELECTRONICS_SUBCATEGORIES = [
   { id: 'all', label: 'Todos os Eletrónicos', icon: '⚡' },
   { id: 'phones', label: 'Smartphones & Tablets', icon: '📱' },
@@ -313,7 +320,7 @@ export const POPULAR_BRANDS: Record<string, string[]> = {
   audio_wearables: ['Apple', 'JBL', 'Sony', 'Samsung'],
 };
 
-export const INITIAL_ORDERS: Order[] = [
+const SEED_ORDERS: Order[] = [
   {
     id: 'GB-91402',
     items: [
@@ -373,3 +380,8 @@ export const INITIAL_ORDERS: Order[] = [
     createdAt: new Date(Date.now() - 3600000 * 20).toISOString(),
   },
 ];
+
+export const INITIAL_ORDERS: Order[] = SEED_ORDERS.map((o) => ({
+  ...o,
+  vendorEmails: o.vendorEmails ?? [DEFAULT_VENDOR_EMAIL],
+}));

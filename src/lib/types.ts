@@ -19,6 +19,7 @@ export interface Product {
   inStock: boolean;
   stockCount: number;
   isFlashDeal?: boolean;
+  vendorEmail?: string; // owner seller; records without it belong to the main seller
 }
 
 export interface CartItem {
@@ -50,6 +51,7 @@ export interface Order {
   paymentReference?: string;
   orderStatus: OrderStatus;
   createdAt: string;
+  vendorEmails?: string[]; // sellers whose products are in this order
 }
 
 export type Language = 'pt' | 'en';

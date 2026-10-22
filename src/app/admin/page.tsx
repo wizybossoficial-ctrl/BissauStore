@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useStore } from '@/context/StoreContext';
 import { formatXOF, formatDate } from '@/lib/formatters';
 import { OrderStatus } from '@/lib/types';
+import { filterOrdersByVendor, filterProductsByVendor, getVendorItems, getVendorSubtotal, useVendorEmail } from '@/lib/vendor';
 import VendorAdminGate from '@/components/VendorAdminGate';
 import { 
   TrendingUp, 
@@ -20,12 +21,23 @@ import {
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
-  const { orders, products, updateOrderStatus } = useStore();
+  return (
+    <VendorAdminGate>
+      <AdminDashboardContent />
+    </VendorAdminGate>
+  );
+}
+
+function AdminDashboardContent() {
+  const { orders: allOrders, products: allProducts, updateOrderStatus } = useStore();
+  const vendorEmail = useVendorEmail() ?? '';
+  const orders = filterOrdersByVendor(allOrders, vendorEmail);
+  const products = filterProductsByVendor(allProducts, vendorEmail);
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
   const totalRevenue = orders
     .filter((o) => o.paymentStatus === 'successful' || o.orderStatus === 'completed')
-    .reduce((sum, o) => sum + o.totalAmount, 0);
+    .reduce((sum, o) => sum + getVendorSubtotal(o, vendorEmail), 0);
 
   const whatsappOrdersCount = orders.filter((o) => o.paymentMethod === 'whatsapp' || !o.paymentMethod).length;
   const inDeliveryCount = orders.filter((o) => o.orderStatus === 'in_delivery').length;
@@ -39,7 +51,7 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <VendorAdminGate>
+    <>
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -175,7 +187,7 @@ export default function AdminDashboardPage() {
 
                   {/* Items */}
                   <td className="py-4 px-2 text-gray-700">
-                    {order.items.map((i) => (
+                    {getVendorItems(order, vendorEmail).map((i) => (
                       <div key={i.product.id} className="line-clamp-1">
                         {i.quantity}x {i.product.name}
                       </div>
@@ -184,7 +196,7 @@ export default function AdminDashboardPage() {
 
                   {/* Total */}
                   <td className="py-4 px-2 font-black text-gray-900 whitespace-nowrap">
-                    {formatXOF(order.totalAmount)}
+                    {formatXOF(getVendorSubtotal(order, vendorEmail))}
                   </td>
 
                   {/* Payment / Order Channel */}
@@ -247,6 +259,6 @@ export default function AdminDashboardPage() {
         </div>
       </div>
       </div>
-    </VendorAdminGate>
+    </>
   );
 }

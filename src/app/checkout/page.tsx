@@ -7,6 +7,7 @@ import { useStore } from '@/context/StoreContext';
 import { BISSAU_BAIRROS } from '@/lib/data';
 import { Order } from '@/lib/types';
 import { formatXOF, generateOrderId } from '@/lib/formatters';
+import { getProductVendor } from '@/lib/vendor';
 import { 
   Truck, 
   MapPin, 
@@ -81,6 +82,7 @@ export default function CheckoutPage() {
       paymentStatus: 'pending',
       orderStatus: 'pending',
       createdAt: new Date().toISOString(),
+      vendorEmails: Array.from(new Set(cart.map((i) => getProductVendor(i.product)))),
     };
 
     // Format WhatsApp prefilled message

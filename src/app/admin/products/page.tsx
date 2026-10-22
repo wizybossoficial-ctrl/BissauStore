@@ -6,11 +6,22 @@ import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { formatXOF } from '@/lib/formatters';
 import { Product, Category } from '@/lib/types';
+import { filterProductsByVendor, useVendorEmail } from '@/lib/vendor';
 import VendorAdminGate from '@/components/VendorAdminGate';
 import { ArrowLeft, Plus, Package, Trash2, X, Check, Sparkles } from 'lucide-react';
 
 export default function AdminProductsPage() {
-  const { products, addProduct } = useStore();
+  return (
+    <VendorAdminGate>
+      <AdminProductsContent />
+    </VendorAdminGate>
+  );
+}
+
+function AdminProductsContent() {
+  const { products: allProducts, addProduct } = useStore();
+  const vendorEmail = useVendorEmail();
+  const products = filterProductsByVendor(allProducts, vendorEmail ?? '');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Form State for new product
@@ -27,8 +38,10 @@ export default function AdminProductsPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!vendorEmail) return;
     const newProd: Product = {
       id: `prod-${Date.now()}`,
+      vendorEmail,
       name,
       nameEn: nameEn || name,
       description,
@@ -60,7 +73,7 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <VendorAdminGate>
+    <>
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -314,6 +327,6 @@ export default function AdminProductsPage() {
         </div>
       )}
       </div>
-    </VendorAdminGate>
+    </>
   );
 }

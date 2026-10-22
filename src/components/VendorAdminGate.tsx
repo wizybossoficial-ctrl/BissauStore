@@ -3,23 +3,36 @@
 import { type ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ShieldAlert } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { getCurrentLocalAccount } from '@/lib/localAuth';
+import { VendorEmailContext } from '@/lib/vendor';
 
 export default function VendorAdminGate({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
-  const [hasAccess, setHasAccess] = useState(false);
+  const [vendorEmail, setVendorEmail] = useState<string | null>(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    const account = getCurrentLocalAccount();
-    setHasAccess(account?.role === 'vendor');
+    let account = null;
+    try {
+      account = getCurrentLocalAccount();
+    } catch {
+      account = null;
+    }
+    setIsSignedIn(account !== null);
+    setVendorEmail(account?.role === 'vendor' ? account.email : null);
     setIsChecking(false);
-  }, []);
+    if (!account) {
+      router.replace('/sign-in');
+    }
+  }, [router]);
 
-  if (isChecking) {
+  if (isChecking || !isSignedIn) {
     return <div className="min-h-[60vh]" aria-busy="true" />;
   }
 
-  if (!hasAccess) {
+  if (!vendorEmail) {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-4 py-12 text-center">
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-red-600">
@@ -36,5 +49,5 @@ export default function VendorAdminGate({ children }: { children: ReactNode }) {
     );
   }
 
-  return <>{children}</>;
+  return <VendorEmailContext.Provider value={vendorEmail}>{children}</VendorEmailContext.Provider>;
 }
