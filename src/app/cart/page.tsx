@@ -160,13 +160,13 @@ export default function CartPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
 
-            {/* Payment security info */}
+            {/* Delivery & WhatsApp order info */}
             <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 text-[11px] text-gray-500 space-y-1">
               <div className="flex items-center gap-1.5 font-bold text-gray-700">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>Pagamento 100% Seguro em Bissau</span>
+                <span>Compra Segura em Bissau</span>
               </div>
-              <p>Pague com Orange Money (#144#), MTN MoMo ou diretamente ao estafeta na entrega.</p>
+              <p>Finalize o seu pedido diretamente no nosso WhatsApp oficial e pague com segurança na entrega.</p>
             </div>
           </div>
         </div>

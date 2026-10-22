@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useStore } from '@/context/StoreContext';
-import { Phone, Mail, MapPin, MessageCircle, ShieldCheck, Truck, CreditCard } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, ShieldCheck, Truck } from 'lucide-react';
 
 export default function Footer() {
   const { language } = useStore();
@@ -43,26 +43,22 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Payment Methods in Bissau */}
+          {/* Ordering & Delivery Flow */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Pagamentos Aceites</h4>
-            <p className="text-xs text-gray-400">Pague com facilidade utilizando:</p>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">Como Encomendar</h4>
+            <p className="text-xs text-gray-400">Processo simples e direto:</p>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2 p-2 rounded-lg bg-stone-800/80 border border-stone-700">
-                <div className="w-4 h-4 rounded-full bg-brand-orange"></div>
-                <span className="text-xs font-medium text-white">Orange Money Guiné-Bissau</span>
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span className="text-xs font-medium text-white">Pedido direto no WhatsApp</span>
               </div>
               <div className="flex items-center gap-2 p-2 rounded-lg bg-stone-800/80 border border-stone-700">
-                <div className="w-4 h-4 rounded-full bg-brand-yellow"></div>
-                <span className="text-xs font-medium text-white">MTN Mobile Money (MoMo)</span>
+                <Truck className="w-4 h-4 text-brand-orange" />
+                <span className="text-xs font-medium text-white">Entrega no seu Bairro em Bissau</span>
               </div>
               <div className="flex items-center gap-2 p-2 rounded-lg bg-stone-800/80 border border-stone-700">
-                <CreditCard className="w-4 h-4 text-emerald-400" />
-                <span className="text-xs font-medium text-white">Cartões GIM-UEMOA / Visa</span>
-              </div>
-              <div className="flex items-center gap-2 p-2 rounded-lg bg-stone-800/80 border border-stone-700">
-                <Truck className="w-4 h-4 text-blue-400" />
-                <span className="text-xs font-medium text-white">Pagamento na Entrega (Bissau)</span>
+                <ShieldCheck className="w-4 h-4 text-blue-400" />
+                <span className="text-xs font-medium text-white">Pagamento na Entrega</span>
               </div>
             </div>
           </div>

@@ -22,13 +22,13 @@
   "hero": {
     "tag": "O maior mercado online da Guiné-Bissau",
     "title": "Compre em Bissau com facilidade e rapidez",
-    "subtitle": "Pague com Orange Money, MTN MoMo ou na entrega. Entregamos em todos os bairros de Bissau.",
+    "subtitle": "Faça o seu pedido direto via WhatsApp e pague na entrega. Entregamos em todos os bairros de Bissau.",
     "cta": "Explorar Produtos",
     "whatsappCta": "Pedir pelo WhatsApp"
   },
   "trust": {
-    "orangeMoney": "Orange Money & MTN MoMo",
-    "orangeMoneyDesc": "Pagamento móvel 100% seguro",
+    "orangeMoney": "Pedidos via WhatsApp",
+    "orangeMoneyDesc": "Atendimento direto e confirmação rápida",
     "delivery": "Entrega Rápida em Bissau",
     "deliveryDesc": "Diretamente na sua casa ou loja",
     "quality": "Qualidade Garantida",
@@ -56,29 +56,24 @@
     "subtotal": "Subtotal",
     "deliveryFee": "Taxa de Entrega (Bissau)",
     "total": "Total a Pagar",
-    "checkout": "Avançar para o Pagamento",
+    "checkout": "Avançar para o WhatsApp",
     "remove": "Remover",
     "itemsCount": "itens"
   },
   "checkout": {
-    "title": "Finalizar Pedido",
+    "title": "Finalizar Pedido via WhatsApp",
     "deliveryInfo": "Informações de Entrega em Bissau",
     "fullName": "Nome Completo",
     "phone": "Número de Telefone (+245)",
-    "phoneHint": "Usado para confirmação e Orange Money",
+    "phoneHint": "Usado para contacto e confirmação da entrega",
     "bairro": "Bairro em Bissau",
     "selectBairro": "Selecione o seu bairro",
     "landmark": "Ponto de Referência / Descrição",
     "landmarkPlaceholder": "Ex: Perto do mercado, ao lado da bomba Galp, casa amarela",
-    "paymentMethod": "Forma de Pagamento",
-    "orangeMoney": "Orange Money Guiné-Bissau",
-    "orangeMoneyHint": "Receberá uma solicitação USSD no seu telemóvel",
-    "momo": "MTN Mobile Money",
-    "momoHint": "Pagamento rápido via carteira MTN MoMo",
-    "card": "Cartão Bancário / GIM-UEMOA (Visa, Mastercard)",
-    "cod": "Pagamento na Entrega (Dinheiro ou MoMo ao estafeta)",
-    "confirmOrder": "Confirmar e Pagar",
-    "processing": "A processar..."
+    "whatsappNotice": "O seu pedido será enviado diretamente para o nosso WhatsApp oficial para confirmação e entrega rápida em Bissau.",
+    "paymentHint": "Pagamento combinado diretamente na entrega em dinheiro ou combinando com o estafeta.",
+    "confirmOrder": "Enviar Pedido para o WhatsApp",
+    "processing": "A abrir o WhatsApp..."
   },
   "order": {
     "title": "Detalhes do Pedido",

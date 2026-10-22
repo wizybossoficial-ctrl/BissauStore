@@ -26,7 +26,7 @@ export interface CartItem {
   quantity: number;
 }
 
-export type PaymentMethod = 'orange_money' | 'momo' | 'card' | 'cod';
+export type PaymentMethod = 'whatsapp' | 'cod';
 
 export type OrderStatus = 'pending' | 'paid' | 'processing' | 'in_delivery' | 'completed' | 'cancelled';
 

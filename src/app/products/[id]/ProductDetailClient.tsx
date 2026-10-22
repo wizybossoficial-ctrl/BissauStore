@@ -14,7 +14,6 @@ import {
   Star, 
   ArrowLeft, 
   Check, 
-  Smartphone,
   MapPin
 } from 'lucide-react';
 
@@ -207,9 +206,9 @@ export default function ProductDetailClient() {
             </div>
 
             <div className="flex items-start gap-3 text-xs text-gray-600">
-              <Smartphone className="w-4 h-4 text-brand-orange flex-shrink-0 mt-0.5" />
+              <MessageCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
               <div>
-                <strong className="text-gray-900">Pagamento Flexível:</strong> Pague online com Orange Money (#144#), MTN MoMo, ou em dinheiro ao estafeta.
+                <strong className="text-gray-900">Atendimento WhatsApp:</strong> Confirmação imediata do seu pedido e pagamento na entrega em Bissau.
               </div>
             </div>
           </div>

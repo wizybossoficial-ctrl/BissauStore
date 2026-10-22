@@ -49,13 +49,14 @@ export default function HomePage() {
                 {t.hero.subtitle}
               </p>
 
-              {/* Payment badges pill */}
+              {/* Trust badges pill */}
               <div className="flex flex-wrap items-center gap-2 text-xs text-gray-300 pt-1">
-                <span className="font-semibold text-white">Pagamentos suportados:</span>
-                <span className="px-2.5 py-1 rounded-md bg-brand-orange text-white font-bold">Orange Money</span>
-                <span className="px-2.5 py-1 rounded-md bg-amber-400 text-gray-900 font-bold">MTN MoMo</span>
-                <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/20 text-white">Cartões UEMOA</span>
-                <span className="px-2.5 py-1 rounded-md bg-emerald-600 text-white font-medium">Na Entrega</span>
+                <span className="font-semibold text-white">Como Funciona:</span>
+                <span className="px-2.5 py-1 rounded-md bg-emerald-600 text-white font-bold flex items-center gap-1">
+                  <MessageCircle className="w-3.5 h-3.5" /> Pedido via WhatsApp
+                </span>
+                <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/20 text-white">Pagamento na Entrega</span>
+                <span className="px-2.5 py-1 rounded-md bg-brand-orange text-white font-medium">Entregas em Bissau</span>
               </div>
 
               {/* CTAs */}
@@ -109,8 +110,8 @@ export default function HomePage() {
                     <span>Entrega no mesmo dia</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
-                    <Smartphone className="w-4 h-4 text-brand-orange" />
-                    <span>Pague com #144#</span>
+                    <MessageCircle className="w-4 h-4 text-emerald-400" />
+                    <span>Apoio via WhatsApp</span>
                   </div>
                 </div>
               </div>
@@ -123,8 +124,8 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center flex-shrink-0">
-              <Smartphone className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+              <MessageCircle className="w-5 h-5" />
             </div>
             <div>
               <h4 className="font-bold text-xs sm:text-sm text-gray-900">{t.trust.orangeMoney}</h4>

@@ -22,13 +22,13 @@
   "hero": {
     "tag": "The premier online marketplace for Guinea-Bissau",
     "title": "Shop easily and quickly in Bissau",
-    "subtitle": "Pay with Orange Money, MTN MoMo, or cash on delivery. Fast delivery to all Bissau neighborhoods.",
+    "subtitle": "Order directly via WhatsApp and pay on delivery. Fast delivery to all Bissau neighborhoods.",
     "cta": "Explore Products",
     "whatsappCta": "Order via WhatsApp"
   },
   "trust": {
-    "orangeMoney": "Orange Money & MTN MoMo",
-    "orangeMoneyDesc": "100% secure mobile payment",
+    "orangeMoney": "WhatsApp Orders",
+    "orangeMoneyDesc": "Direct service and quick confirmation",
     "delivery": "Fast Delivery in Bissau",
     "deliveryDesc": "Directly to your home or shop",
     "quality": "Guaranteed Quality",
@@ -56,29 +56,24 @@
     "subtotal": "Subtotal",
     "deliveryFee": "Delivery Fee (Bissau)",
     "total": "Total Amount",
-    "checkout": "Proceed to Checkout",
+    "checkout": "Proceed to WhatsApp",
     "remove": "Remove",
     "itemsCount": "items"
   },
   "checkout": {
-    "title": "Checkout",
+    "title": "Complete Order via WhatsApp",
     "deliveryInfo": "Bissau Delivery Information",
     "fullName": "Full Name",
     "phone": "Phone Number (+245)",
-    "phoneHint": "Used for confirmation and Orange Money",
+    "phoneHint": "Used for contact and delivery confirmation",
     "bairro": "Neighborhood in Bissau",
     "selectBairro": "Select your neighborhood",
     "landmark": "Landmark / Location Reference",
     "landmarkPlaceholder": "E.g. Near the market, next to Galp station, yellow house",
-    "paymentMethod": "Payment Method",
-    "orangeMoney": "Orange Money Guinea-Bissau",
-    "orangeMoneyHint": "You will receive a USSD prompt on your phone",
-    "momo": "MTN Mobile Money",
-    "momoHint": "Quick payment via MTN MoMo wallet",
-    "card": "Bank Card / GIM-UEMOA (Visa, Mastercard)",
-    "cod": "Cash on Delivery (Cash or MoMo to courier)",
-    "confirmOrder": "Confirm and Pay",
-    "processing": "Processing..."
+    "whatsappNotice": "Your order will be sent directly to our official WhatsApp for confirmation and fast delivery in Bissau.",
+    "paymentHint": "Payment arranged directly upon delivery in cash or with courier.",
+    "confirmOrder": "Send Order to WhatsApp",
+    "processing": "Opening WhatsApp..."
   },
   "order": {
     "title": "Order Details",

@@ -15,7 +15,8 @@ import {
   CheckCircle, 
   Clock, 
   ExternalLink,
-  PlusCircle
+  PlusCircle,
+  MessageCircle
 } from 'lucide-react';
 
 export default function AdminDashboardPage() {
@@ -26,7 +27,7 @@ export default function AdminDashboardPage() {
     .filter((o) => o.paymentStatus === 'successful' || o.orderStatus === 'completed')
     .reduce((sum, o) => sum + o.totalAmount, 0);
 
-  const orangeMoneyCount = orders.filter((o) => o.paymentMethod === 'orange_money').length;
+  const whatsappOrdersCount = orders.filter((o) => o.paymentMethod === 'whatsapp' || !o.paymentMethod).length;
   const inDeliveryCount = orders.filter((o) => o.orderStatus === 'in_delivery').length;
 
   const filteredOrders = filterStatus === 'all'
@@ -91,16 +92,16 @@ export default function AdminDashboardPage() {
           <p className="text-[11px] text-gray-500">Registadas no sistema</p>
         </div>
 
-        {/* Orange Money & MoMo Share */}
+        {/* WhatsApp Orders Share */}
         <div className="p-5 rounded-3xl bg-white border border-gray-100 shadow-sm space-y-2">
           <div className="flex items-center justify-between text-xs text-gray-500 font-medium">
-            <span>Mobile Money</span>
-            <div className="p-2 rounded-xl bg-orange-50 text-brand-orange">
-              <Smartphone className="w-4 h-4" />
+            <span>Pedidos WhatsApp</span>
+            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600">
+              <MessageCircle className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl font-black text-gray-900">{orangeMoneyCount} pedidos</p>
-          <p className="text-[11px] text-brand-orange font-semibold">Orange Money / MoMo</p>
+          <p className="text-2xl font-black text-gray-900">{whatsappOrdersCount} pedidos</p>
+          <p className="text-[11px] text-emerald-600 font-semibold">Via WhatsApp (+245)</p>
         </div>
 
         {/* Deliveries in Progress */}
@@ -186,23 +187,23 @@ export default function AdminDashboardPage() {
                     {formatXOF(order.totalAmount)}
                   </td>
 
-                  {/* Payment */}
+                  {/* Payment / Order Channel */}
                   <td className="py-4 px-2">
                     <span
                       className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                        order.paymentMethod === 'orange_money'
-                          ? 'bg-orange-100 text-orange-800'
-                          : order.paymentMethod === 'momo'
-                          ? 'bg-amber-100 text-amber-800'
-                          : order.paymentMethod === 'card'
-                          ? 'bg-blue-100 text-blue-800'
+                        order.paymentMethod === 'whatsapp'
+                          ? 'bg-emerald-100 text-emerald-800'
                           : 'bg-gray-100 text-gray-800'
                       }`}
                     >
-                      {order.paymentMethod === 'orange_money' && '🟠 Orange'}
-                      {order.paymentMethod === 'momo' && '🟡 MoMo'}
-                      {order.paymentMethod === 'card' && '💳 Cartão'}
-                      {order.paymentMethod === 'cod' && '💵 Entrega'}
+                      {order.paymentMethod === 'whatsapp' ? (
+                        <>
+                          <MessageCircle className="w-3 h-3 text-emerald-600" />
+                          <span>WhatsApp</span>
+                        </>
+                      ) : (
+                        <span>💵 Entrega</span>
+                      )}
                     </span>
                   </td>
 

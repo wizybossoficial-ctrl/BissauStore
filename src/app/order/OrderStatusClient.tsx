@@ -137,9 +137,9 @@ export default function OrderStatusClient() {
 
           <div className="pt-2 border-t border-gray-100 text-xs">
             <div className="flex items-center gap-2 text-gray-700">
-              <Smartphone className="w-4 h-4 text-brand-orange" />
+              <MessageCircle className="w-4 h-4 text-emerald-600" />
               <span>
-                Forma de Pagamento: <strong className="uppercase">{order.paymentMethod.replace('_', ' ')}</strong>
+                Canal do Pedido: <strong className="uppercase">{order.paymentMethod === 'whatsapp' ? 'WhatsApp (+245)' : 'Na Entrega'}</strong>
               </span>
             </div>
             {order.paymentReference && (
@@ -173,7 +173,7 @@ export default function OrderStatusClient() {
               <span>{formatXOF(order.deliveryFee)}</span>
             </div>
             <div className="flex justify-between font-extrabold text-sm text-gray-900 pt-1">
-              <span>Total Pago</span>
+              <span>Total do Pedido</span>
               <span className="text-brand-orange">{formatXOF(order.totalAmount)}</span>
             </div>
           </div>

@@ -5,20 +5,18 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useStore } from '@/context/StoreContext';
 import { BISSAU_BAIRROS } from '@/lib/data';
-import { PaymentMethod, Order } from '@/lib/types';
+import { Order } from '@/lib/types';
 import { formatXOF, generateOrderId } from '@/lib/formatters';
-import PaymentModal from '@/components/PaymentModal';
 import { 
   Truck, 
-  Smartphone, 
-  CreditCard, 
   MapPin, 
   Phone, 
   User, 
-  ShieldCheck, 
   ArrowLeft, 
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  MessageCircle,
+  Clock
 } from 'lucide-react';
 
 export default function CheckoutPage() {
@@ -30,11 +28,8 @@ export default function CheckoutPage() {
   const [phone, setPhone] = useState('+245 955 ');
   const [bairro, setBairro] = useState(BISSAU_BAIRROS[0]);
   const [landmark, setLandmark] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('orange_money');
-
-  // Modal State
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const deliveryFee = 1500; // 1,500 FCFA
   const finalTotal = cartTotal + deliveryFee;
@@ -42,10 +37,10 @@ export default function CheckoutPage() {
   if (cart.length === 0) {
     return (
       <div className="max-w-xl mx-auto px-4 py-16 text-center space-y-4">
-        <h2 className="text-xl font-bold text-gray-800">O seu carrinho está vazio</h2>
-        <p className="text-xs text-gray-500">Adicione produtos antes de finalizar a sua compra.</p>
-        <Link href="/products" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-orange text-white text-xs font-bold">
-          <ArrowLeft className="w-4 h-4" /> Ir às Compras
+        <h2 className="text-xl font-bold text-gray-800">{t.cart.empty}</h2>
+        <p className="text-xs text-gray-500">{t.cart.emptySubtitle}</p>
+        <Link href="/products" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-orange text-white text-xs font-bold shadow-sm">
+          <ArrowLeft className="w-4 h-4" /> {t.cart.continueShopping}
         </Link>
       </div>
     );
@@ -56,50 +51,68 @@ export default function CheckoutPage() {
     setErrorMessage('');
 
     if (!fullName.trim()) {
-      setErrorMessage('Por favor, introduza o seu nome completo.');
+      setErrorMessage(language === 'pt' ? 'Por favor, introduza o seu nome completo.' : 'Please enter your full name.');
       return;
     }
     if (!phone || phone.replace(/\D/g, '').length < 8) {
-      setErrorMessage('Por favor, introduza um número de telefone válido da Guiné-Bissau (+245).');
+      setErrorMessage(language === 'pt' ? 'Por favor, introduza um número de telefone válido da Guiné-Bissau (+245).' : 'Please enter a valid Guinea-Bissau phone number (+245).');
       return;
     }
     if (!landmark.trim()) {
-      setErrorMessage('Por favor, indique um ponto de referência para a entrega no seu bairro.');
+      setErrorMessage(language === 'pt' ? 'Por favor, indique um ponto de referência para a entrega no seu bairro.' : 'Please enter a landmark or location reference.');
       return;
     }
 
-    if (paymentMethod === 'orange_money' || paymentMethod === 'momo') {
-      // Open interactive USSD / Push prompt modal
-      setIsPaymentModalOpen(true);
-    } else {
-      // For COD or Card
-      completeOrder(paymentMethod === 'cod' ? undefined : 'CARD-UEMOA-OK');
-    }
-  };
+    setIsSubmitting(true);
 
-  const completeOrder = (paymentRef?: string) => {
+    const orderId = generateOrderId();
     const newOrder: Order = {
-      id: generateOrderId(),
+      id: orderId,
       items: [...cart],
       totalAmount: finalTotal,
       deliveryFee,
       deliveryAddress: {
-        fullName,
-        phone,
+        fullName: fullName.trim(),
+        phone: phone.trim(),
         bairro,
-        landmark,
+        landmark: landmark.trim(),
       },
-      paymentMethod,
-      paymentStatus: paymentMethod === 'cod' ? 'pending' : 'successful',
-      paymentReference: paymentRef,
-      orderStatus: paymentMethod === 'cod' ? 'pending' : 'paid',
+      paymentMethod: 'whatsapp',
+      paymentStatus: 'pending',
+      orderStatus: 'pending',
       createdAt: new Date().toISOString(),
     };
 
+    // Format WhatsApp prefilled message
+    const itemsList = cart
+      .map(({ product, quantity }) => {
+        const title = language === 'pt' ? product.name : product.nameEn;
+        return `• ${quantity}x ${title} - ${formatXOF(product.price * quantity)}`;
+      })
+      .join('\n');
+
+    const message =
+      `🛍️ *NOVO PEDIDO - BISSAUSTORE* 🇬🇼\n` +
+      `*ID do Pedido:* #${orderId}\n\n` +
+      `👤 *Cliente:* ${fullName.trim()}\n` +
+      `📞 *Contacto:* ${phone.trim()}\n` +
+      `📍 *Bairro:* ${bairro}\n` +
+      `🧭 *Ponto de Referência:* ${landmark.trim()}\n\n` +
+      `📦 *Artigos Encomendados:*\n${itemsList}\n\n` +
+      `🚚 *Taxa de Entrega:* ${formatXOF(deliveryFee)}\n` +
+      `💰 *TOTAL A PAGAR:* ${formatXOF(finalTotal)}\n\n` +
+      `💬 Olá BissauStore! Acabei de registar o meu pedido no site. Podem confirmar a disponibilidade e o envio para o meu bairro?`;
+
+    // Save to local store and clear cart
     addOrder(newOrder);
     clearCart();
-    setIsPaymentModalOpen(false);
-    router.push(`/order?id=${newOrder.id}`);
+
+    // Open WhatsApp link in new tab
+    const whatsappUrl = `https://wa.me/245955000000?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+
+    // Route to confirmation / tracking page
+    router.push(`/order?id=${orderId}`);
   };
 
   return (
@@ -124,7 +137,7 @@ export default function CheckoutPage() {
                 </div>
                 <div>
                   <h2 className="font-bold text-base text-gray-900">{t.checkout.deliveryInfo}</h2>
-                  <p className="text-xs text-gray-500">Entregamos na sua casa, loja ou escritório</p>
+                  <p className="text-xs text-gray-500">Entregamos na sua casa, loja ou escritório em Bissau</p>
                 </div>
               </div>
 
@@ -201,133 +214,49 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Payment Method Selector Box */}
-            <div className="p-6 rounded-3xl bg-white border border-gray-100 shadow-sm space-y-4">
-              <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
-                <div className="p-2 rounded-xl bg-orange-50 text-brand-orange">
-                  <Smartphone className="w-5 h-5" />
+            {/* Direct WhatsApp Order Information Box */}
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-50 to-teal-50/50 border border-emerald-100 shadow-sm space-y-4">
+              <div className="flex items-center gap-2 pb-2 border-b border-emerald-100">
+                <div className="p-2 rounded-xl bg-emerald-600 text-white">
+                  <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-base text-gray-900">{t.checkout.paymentMethod}</h2>
-                  <p className="text-xs text-gray-500">Escolha como prefere pagar na Guiné-Bissau</p>
+                  <h2 className="font-bold text-base text-gray-900">{t.checkout.title}</h2>
+                  <p className="text-xs text-gray-600">{t.checkout.whatsappNotice}</p>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                {/* 1. Orange Money */}
-                <label
-                  onClick={() => setPaymentMethod('orange_money')}
-                  className={`p-4 rounded-2xl border flex items-start gap-3 cursor-pointer transition ${
-                    paymentMethod === 'orange_money'
-                      ? 'border-brand-orange bg-orange-50/50 ring-2 ring-brand-orange/20'
-                      : 'border-gray-200 hover:bg-gray-50'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    checked={paymentMethod === 'orange_money'}
-                    onChange={() => setPaymentMethod('orange_money')}
-                    className="mt-1 text-brand-orange focus:ring-brand-orange"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full bg-brand-orange"></span>
-                      <span className="font-bold text-xs sm:text-sm text-gray-900">
-                        {t.checkout.orangeMoney}
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-brand-orange text-white font-bold ml-auto">
-                        Popular
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">{t.checkout.orangeMoneyHint} (#144#)</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-2xl bg-white border border-emerald-100/80 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-emerald-800">
+                    <Truck className="w-4 h-4 text-emerald-600" />
+                    <span>Pagamento na Entrega</span>
                   </div>
-                </label>
+                  <p className="text-gray-500 text-[11px]">
+                    {t.checkout.paymentHint}
+                  </p>
+                </div>
 
-                {/* 2. MTN MoMo */}
-                <label
-                  onClick={() => setPaymentMethod('momo')}
-                  className={`p-4 rounded-2xl border flex items-start gap-3 cursor-pointer transition ${
-                    paymentMethod === 'momo'
-                      ? 'border-amber-500 bg-amber-50/50 ring-2 ring-amber-500/20'
-                      : 'border-gray-200 hover:bg-gray-50'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    checked={paymentMethod === 'momo'}
-                    onChange={() => setPaymentMethod('momo')}
-                    className="mt-1 text-amber-500 focus:ring-amber-500"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full bg-amber-500"></span>
-                      <span className="font-bold text-xs sm:text-sm text-gray-900">{t.checkout.momo}</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">{t.checkout.momoHint}</p>
+                <div className="p-3.5 rounded-2xl bg-white border border-emerald-100/80 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-emerald-800">
+                    <Clock className="w-4 h-4 text-emerald-600" />
+                    <span>Confirmação Imediata</span>
                   </div>
-                </label>
-
-                {/* 3. Bank Cards / GIM-UEMOA */}
-                <label
-                  onClick={() => setPaymentMethod('card')}
-                  className={`p-4 rounded-2xl border flex items-start gap-3 cursor-pointer transition ${
-                    paymentMethod === 'card'
-                      ? 'border-slate-800 bg-slate-50 ring-2 ring-slate-800/20'
-                      : 'border-gray-200 hover:bg-gray-50'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    checked={paymentMethod === 'card'}
-                    onChange={() => setPaymentMethod('card')}
-                    className="mt-1 text-slate-900 focus:ring-slate-900"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <CreditCard className="w-4 h-4 text-slate-700" />
-                      <span className="font-bold text-xs sm:text-sm text-gray-900">{t.checkout.card}</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">Visa, Mastercard e cartões regionais GIM-UEMOA</p>
-                  </div>
-                </label>
-
-                {/* 4. Cash on Delivery (COD) */}
-                <label
-                  onClick={() => setPaymentMethod('cod')}
-                  className={`p-4 rounded-2xl border flex items-start gap-3 cursor-pointer transition ${
-                    paymentMethod === 'cod'
-                      ? 'border-emerald-600 bg-emerald-50/50 ring-2 ring-emerald-600/20'
-                      : 'border-gray-200 hover:bg-gray-50'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    checked={paymentMethod === 'cod'}
-                    onChange={() => setPaymentMethod('cod')}
-                    className="mt-1 text-emerald-600 focus:ring-emerald-600"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <Truck className="w-4 h-4 text-emerald-600" />
-                      <span className="font-bold text-xs sm:text-sm text-gray-900">{t.checkout.cod}</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">Pague em dinheiro ou envie MoMo ao estafeta na entrega</p>
-                  </div>
-                </label>
+                  <p className="text-gray-500 text-[11px]">
+                    A nossa equipa responde pelo WhatsApp para validar o pedido e combinar a hora de entrega.
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* WhatsApp Submit Button */}
             <button
               type="submit"
-              className="w-full py-4 rounded-2xl bg-brand-orange hover:bg-orange-600 text-white font-black text-sm sm:text-base shadow-xl shadow-orange-900/20 flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5"
+              disabled={isSubmitting}
+              className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm sm:text-base shadow-xl shadow-emerald-900/20 flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5 disabled:opacity-50"
             >
-              <ShieldCheck className="w-5 h-5" />
-              <span>{t.checkout.confirmOrder} ({formatXOF(finalTotal)})</span>
+              <MessageCircle className="w-5 h-5" />
+              <span>{isSubmitting ? t.checkout.processing : `${t.checkout.confirmOrder} (${formatXOF(finalTotal)})`}</span>
             </button>
           </form>
         </div>
@@ -370,23 +299,13 @@ export default function CheckoutPage() {
               <span className="font-black text-xl text-brand-orange">{formatXOF(finalTotal)}</span>
             </div>
 
-            <div className="p-3 rounded-xl bg-emerald-50 text-emerald-800 text-[11px] flex items-center gap-2">
+            <div className="p-3.5 rounded-2xl bg-emerald-50 text-emerald-900 text-[11px] flex items-center gap-2 border border-emerald-100">
               <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <span>Garantia de entrega rápida e segura em Bissau</span>
+              <span>Garantia de entrega no mesmo dia ou até 24h em Bissau</span>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Interactive Mobile Money Payment Modal */}
-      <PaymentModal
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        onSuccess={(ref) => completeOrder(ref)}
-        paymentMethod={paymentMethod}
-        amount={finalTotal}
-        phoneNumber={phone}
-      />
     </div>
   );
 }
