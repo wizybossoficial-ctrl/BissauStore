@@ -5,9 +5,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'BissauStore | O Maior Mercado Online da Guiné-Bissau',
-  description: 'Compre produtos em Bissau com facilidade. Faça o seu pedido via WhatsApp e pague na entrega. Entregas rápidas em todos os bairros.',
-  keywords: 'Bissau, Guiné-Bissau, compras WhatsApp Bissau, compras online Bissau, e-commerce Guiné-Bissau',
+  title: 'BissauStore | Catálogo de Produtos da Guiné-Bissau',
+  description: 'Explore produtos e lojas da Guiné-Bissau e contacte vendedores diretamente pelo WhatsApp.',
+  keywords: 'Bissau, Guiné-Bissau, catálogo de produtos, lojas locais, vendedores, WhatsApp',
 };
 
 export default function RootLayout({

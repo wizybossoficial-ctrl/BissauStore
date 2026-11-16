@@ -36,9 +36,7 @@ export default function SignUpPage() {
         email,
         password,
         phone,
-        ...(accountType === 'vendor'
-          ? { storeName, productCategory: locationOrCategory }
-          : { neighborhood: locationOrCategory }),
+        ...(accountType === 'vendor' ? { storeName, productCategory: locationOrCategory } : {}),
       });
 
       setSuccess(t.account.accountCreated);
@@ -127,10 +125,12 @@ export default function SignUpPage() {
                   </span>
                 </label>
 
-                <label className="block">
-                  <span className="mb-1.5 block text-sm font-semibold text-gray-700">{accountType === 'vendor' ? t.account.category : t.account.neighborhood}</span>
-                  <input type="text" value={locationOrCategory} onChange={(event) => setLocationOrCategory(event.target.value)} required placeholder={accountType === 'vendor' ? 'Ex.: Moda, alimentação' : 'Ex.: Bairro de Ajuda'} className={inputClassName} />
-                </label>
+                {accountType === 'vendor' && (
+                  <label className="block">
+                    <span className="mb-1.5 block text-sm font-semibold text-gray-700">{t.account.category}</span>
+                    <input type="text" value={locationOrCategory} onChange={(event) => setLocationOrCategory(event.target.value)} required placeholder="Ex.: Moda, alimentação" className={inputClassName} />
+                  </label>
+                )}
 
                 <label className="block sm:col-span-2">
                   <span className="mb-1.5 block text-sm font-semibold text-gray-700">{t.account.password}</span>

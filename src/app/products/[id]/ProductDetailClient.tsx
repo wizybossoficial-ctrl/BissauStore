@@ -1,30 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import React from 'react';
+import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useStore } from '@/context/StoreContext';
 import { formatXOF } from '@/lib/formatters';
-import { 
-  ShoppingBag, 
-  MessageCircle, 
-  Truck, 
-  ShieldCheck, 
-  Star, 
-  ArrowLeft, 
-  Check, 
-  MapPin
-} from 'lucide-react';
+import { MessageCircle, Star, ArrowLeft } from 'lucide-react';
 
-export default function ProductDetailClient() {
+export default function ProductDetailClient({ productId }: { productId?: string }) {
   const params = useParams();
-  const router = useRouter();
-  const { products, language, t, addToCart } = useStore();
-  const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
+  const { products, language, t } = useStore();
 
-  const product = products.find((p) => p.id === params.id);
+  const routeProductId = params.id;
+  const selectedProductId = productId ?? (typeof routeProductId === 'string' ? routeProductId : undefined);
+  const product = products.find((p) => p.id === selectedProductId);
 
   if (!product) {
     return (
@@ -41,30 +31,19 @@ export default function ProductDetailClient() {
   const title = language === 'pt' ? product.name : product.nameEn;
   const description = language === 'pt' ? product.description : product.descriptionEn;
 
-  const handleAddToCart = () => {
-    addToCart(product, quantity);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
-
-  const handleBuyNow = () => {
-    addToCart(product, quantity);
-    router.push('/checkout');
-  };
-
   const whatsappMessage = encodeURIComponent(
-    `Olá BissauStore! Quero comprar o artigo: ${title} (${quantity} unidade(s) - Total: ${formatXOF(product.price * quantity)}). Quero entrega em Bissau.`
+    `Olá BissauStore! Tenho interesse em ${title}, anunciado por ${formatXOF(product.price)}. Está disponível?`
   );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Back button */}
-      <button
-        onClick={() => router.back()}
+      <Link
+        href="/products"
         className="inline-flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-brand-orange transition"
       >
         <ArrowLeft className="w-4 h-4" /> Voltar
-      </button>
+      </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left: Product Image */}
@@ -133,58 +112,7 @@ export default function ProductDetailClient() {
             </p>
           </div>
 
-          {/* Quantity & Order Actions */}
-          <div className="space-y-4 pt-2">
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-gray-700">Quantidade:</span>
-              <div className="flex items-center border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 text-sm font-bold"
-                >
-                  -
-                </button>
-                <span className="px-4 py-1.5 text-xs font-bold text-gray-900">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(Math.min(product.stockCount, quantity + 1))}
-                  className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 text-sm font-bold"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button
-                onClick={handleAddToCart}
-                className={`py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition ${
-                  added
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-stone-900 hover:bg-black text-white shadow-md'
-                }`}
-              >
-                {added ? (
-                  <>
-                    <Check className="w-4 h-4" />
-                    <span>Adicionado ao Carrinho!</span>
-                  </>
-                ) : (
-                  <>
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>Adicionar ao Carrinho</span>
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={handleBuyNow}
-                className="py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm bg-brand-orange hover:bg-orange-600 text-white shadow-md flex items-center justify-center gap-2 transition"
-              >
-                <span>Comprar Agora</span>
-              </button>
-            </div>
-
-            {/* Direct WhatsApp Order */}
+          <div className="pt-2">
             <a
               href={`https://wa.me/245955000000?text=${whatsappMessage}`}
               target="_blank"
@@ -192,25 +120,8 @@ export default function ProductDetailClient() {
               className="w-full py-3 px-4 rounded-2xl font-bold text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center gap-2 transition"
             >
               <MessageCircle className="w-4 h-4 text-emerald-600" />
-              <span>Pedir diretamente no WhatsApp (+245)</span>
+              <span>Inquirir via WhatsApp</span>
             </a>
-          </div>
-
-          {/* Local Bissau delivery & payment guarantees */}
-          <div className="border-t border-gray-100 pt-6 space-y-3">
-            <div className="flex items-start gap-3 text-xs text-gray-600">
-              <Truck className="w-4 h-4 text-brand-green flex-shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-gray-900">Entregas em Bissau:</strong> Entregamos no mesmo dia ou em até 24h em Bandim, Santa Luzia, Bissau Velho, Cupilon, Bairro Militar, etc.
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 text-xs text-gray-600">
-              <MessageCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-gray-900">Atendimento WhatsApp:</strong> Confirmação imediata do seu pedido e pagamento na entrega em Bissau.
-              </div>
-            </div>
           </div>
         </div>
       </div>

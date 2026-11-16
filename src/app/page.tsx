@@ -9,13 +9,11 @@ import { formatXOF } from '@/lib/formatters';
 import { 
   Zap, 
   ShieldCheck, 
-  Truck, 
   Smartphone, 
   MessageCircle, 
   ArrowRight, 
   Sparkles,
-  ShoppingBag,
-  Clock
+  ShoppingBag
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -42,7 +40,7 @@ export default function HomePage() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
-                Compre em <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-yellow">Bissau</span> com rapidez e confiança.
+                Descubra produtos de lojas locais na <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-yellow">Guiné-Bissau</span>.
               </h1>
 
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-xl">
@@ -51,12 +49,12 @@ export default function HomePage() {
 
               {/* Trust badges pill */}
               <div className="flex flex-wrap items-center gap-2 text-xs text-gray-300 pt-1">
-                <span className="font-semibold text-white">Como Funciona:</span>
+                <span className="font-semibold text-white">Explore e pergunte:</span>
                 <span className="px-2.5 py-1 rounded-md bg-emerald-600 text-white font-bold flex items-center gap-1">
-                  <MessageCircle className="w-3.5 h-3.5" /> Pedido via WhatsApp
+                  <MessageCircle className="w-3.5 h-3.5" /> Contacto via WhatsApp
                 </span>
-                <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/20 text-white">Pagamento na Entrega</span>
-                <span className="px-2.5 py-1 rounded-md bg-brand-orange text-white font-medium">Entregas em Bissau</span>
+                <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/20 text-white">Lojas locais</span>
+                <span className="px-2.5 py-1 rounded-md bg-brand-orange text-white font-medium">Produtos em destaque</span>
               </div>
 
               {/* CTAs */}
@@ -71,13 +69,13 @@ export default function HomePage() {
                 </Link>
 
                 <a
-                  href="https://wa.me/245955000000?text=Olá%20BissauStore,%20gostaria%20de%20fazer%20um%20pedido%20direto"
+                  href="https://wa.me/245955000000?text=Olá%20BissauStore,%20gostaria%20de%20saber%20mais%20sobre%20os%20produtos%20do%20catálogo"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-md flex items-center gap-2 transition"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  <span>{t.hero.whatsappCta}</span>
+                  <span>Fale connosco</span>
                 </a>
               </div>
             </div>
@@ -87,7 +85,7 @@ export default function HomePage() {
               <div className="relative rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 p-6 shadow-2xl space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-amber-300">🔥 Destaque em Bissau</span>
-                  <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-medium">Pronta Entrega</span>
+                  <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-medium">Em destaque</span>
                 </div>
 
                 <div className="relative h-56 rounded-2xl overflow-hidden bg-white/5">
@@ -106,8 +104,8 @@ export default function HomePage() {
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
-                    <Truck className="w-4 h-4 text-emerald-400" />
-                    <span>Entrega no mesmo dia</span>
+                    <Smartphone className="w-4 h-4 text-emerald-400" />
+                    <span>Produtos selecionados</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
                     <MessageCircle className="w-4 h-4 text-emerald-400" />
@@ -128,18 +126,18 @@ export default function HomePage() {
               <MessageCircle className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-bold text-xs sm:text-sm text-gray-900">{t.trust.orangeMoney}</h4>
-              <p className="text-[11px] text-gray-500 mt-0.5">{t.trust.orangeMoneyDesc}</p>
+              <h4 className="font-bold text-xs sm:text-sm text-gray-900">{t.trust.inquiry}</h4>
+              <p className="text-[11px] text-gray-500 mt-0.5">{t.trust.inquiryDesc}</p>
             </div>
           </div>
 
           <div className="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-brand-green flex items-center justify-center flex-shrink-0">
-              <Truck className="w-5 h-5" />
+              <Smartphone className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-bold text-xs sm:text-sm text-gray-900">{t.trust.delivery}</h4>
-              <p className="text-[11px] text-gray-500 mt-0.5">{t.trust.deliveryDesc}</p>
+              <h4 className="font-bold text-xs sm:text-sm text-gray-900">{t.trust.catalog}</h4>
+              <p className="text-[11px] text-gray-500 mt-0.5">{t.trust.catalogDesc}</p>
             </div>
           </div>
 
@@ -176,12 +174,12 @@ export default function HomePage() {
                 </div>
                 <div>
                   <h2 className="font-black text-xl text-gray-900">{t.products.flashTitle}</h2>
-                  <p className="text-xs text-gray-600">Preços promocionais por tempo limitado em Bissau</p>
+                  <p className="text-xs text-gray-600">Produtos selecionados por vendedores locais</p>
                 </div>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-red text-white text-xs font-bold">
-                <Clock className="w-3.5 h-3.5" />
-                <span>Termina em breve</span>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Em destaque</span>
               </div>
             </div>
 
@@ -251,19 +249,19 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4">
         <div className="rounded-3xl bg-gradient-to-r from-emerald-700 to-teal-900 text-white p-8 md:p-10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
-            <h3 className="font-extrabold text-2xl">Prefere fazer o seu pedido diretamente pelo WhatsApp?</h3>
+            <h3 className="font-extrabold text-2xl">Tem dúvidas sobre um produto?</h3>
             <p className="text-emerald-100 text-xs sm:text-sm max-w-xl">
-              Fale com um dos nossos agentes em Bissau. Aceitamos pagamentos diretos por Orange Money ou na entrega da encomenda.
+              Contacte-nos pelo WhatsApp para saber mais sobre os produtos e vendedores do catálogo.
             </p>
           </div>
           <a
-            href="https://wa.me/245955000000?text=Olá!%20Gostaria%20de%20fazer%20um%20pedido%20pelo%20WhatsApp"
+            href="https://wa.me/245955000000?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20o%20catálogo"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-4 rounded-2xl bg-white hover:bg-gray-100 text-emerald-900 font-extrabold text-sm shadow-lg flex items-center gap-2 transition flex-shrink-0"
           >
             <MessageCircle className="w-5 h-5 text-emerald-600" />
-            <span>Conversar no WhatsApp (+245)</span>
+            <span>Fale connosco no WhatsApp</span>
           </a>
         </div>
       </section>

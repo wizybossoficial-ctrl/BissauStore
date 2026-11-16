@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStore } from '@/context/StoreContext';
 import ProductCard from '@/components/ProductCard';
+import ProductDetailClient from './[id]/ProductDetailClient';
 import { Category } from '@/lib/types';
 import { Search, Filter, SlidersHorizontal } from 'lucide-react';
 
@@ -25,6 +26,14 @@ const POPULAR_BRANDS: Record<string, string[]> = {
 export default function ProductsPage() {
   const { products, selectedCategory, setSelectedCategory, searchQuery, setSearchQuery, t } = useStore();
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
+  const [detailProductId, setDetailProductId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const productId = new URLSearchParams(window.location.search).get('product');
+    if (productId) {
+      setDetailProductId(productId);
+    }
+  }, []);
 
   // Subcategory and Brand states
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
@@ -70,6 +79,10 @@ export default function ProductsPage() {
     return b.rating - a.rating;
   });
 
+  if (detailProductId) {
+    return <ProductDetailClient productId={detailProductId} />;
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header & Search */}
@@ -77,7 +90,7 @@ export default function ProductsPage() {
         <div>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900">{t.nav.products}</h1>
           <p className="text-xs sm:text-sm text-gray-500 mt-1">
-            {sortedProducts.length} artigos disponíveis com entrega rápida em Bissau
+            {sortedProducts.length} produtos no catálogo
           </p>
         </div>
 

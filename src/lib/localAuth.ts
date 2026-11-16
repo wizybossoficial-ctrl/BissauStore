@@ -6,7 +6,6 @@ export interface LocalAccount {
   passwordHash: string;
   phone: string;
   role: LocalAccountRole;
-  neighborhood?: string;
   productCategory?: string;
   storeName?: string;
 }

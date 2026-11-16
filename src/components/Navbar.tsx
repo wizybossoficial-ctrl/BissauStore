@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useStore } from '@/context/StoreContext';
 import { getCurrentLocalAccount } from '@/lib/localAuth';
-import { ShoppingBag, Search, Menu, X, Globe, PhoneCall, LayoutDashboard, UserRound } from 'lucide-react';
+import { Search, Menu, X, Globe, PhoneCall, LayoutDashboard, UserRound } from 'lucide-react';
 
 export default function Navbar() {
-  const { language, setLanguage, t, cartCount, searchQuery, setSearchQuery, setSelectedCategory } = useStore();
+  const { language, setLanguage, t, searchQuery, setSearchQuery, setSelectedCategory } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVendor, setIsVendor] = useState(false);
   const router = useRouter();
@@ -41,14 +41,14 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1 font-semibold text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Bissau Express
+              BissauStore
             </span>
             <span className="hidden sm:inline text-gray-400">|</span>
-            <span className="hidden sm:inline">Entregas rápidas em todos os bairros de Bissau</span>
+            <span className="hidden sm:inline">Catálogo de produtos da Guiné-Bissau</span>
           </div>
           <div className="flex items-center gap-4 text-xs">
             <a
-              href="https://wa.me/245955000000?text=Olá%20BissauStore,%20preciso%20de%20ajuda%20com%20uma%20compra"
+              href="https://wa.me/245955000000?text=Olá%20BissauStore,%20tenho%20uma%20pergunta%20sobre%20um%20produto"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 hover:text-emerald-400 transition"
@@ -88,7 +88,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* SEARCH BAR (Visible on Mobile right before the Cart Icon & on Desktop) */}
+        {/* Search products */}
         <form onSubmit={handleSearch} className="flex-1 max-w-xl relative mx-1 sm:mx-2">
           <input
             type="text"
@@ -106,7 +106,7 @@ export default function Navbar() {
           </button>
         </form>
 
-        {/* Action Buttons: Cart & Menu */}
+        {/* Account and menu actions */}
         <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
           <div className="hidden md:flex items-center gap-2">
             <Link
@@ -133,18 +133,11 @@ export default function Navbar() {
             </Link>
           )}
 
-          {/* Cart Icon */}
           <Link
-            href="/cart"
-            className="relative flex items-center gap-1.5 p-2 sm:px-3.5 sm:py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-medium text-xs sm:text-sm transition"
+            href="/products"
+            className="flex items-center gap-1.5 p-2 sm:px-3.5 sm:py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-medium text-xs sm:text-sm transition"
           >
-            <ShoppingBag className="w-5 h-5 text-brand-green flex-shrink-0" />
-            <span className="hidden sm:inline font-semibold">{t.nav.cart}</span>
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 bg-brand-red text-white text-[10px] sm:text-xs font-bold w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shadow-sm">
-                {cartCount}
-              </span>
-            )}
+            <span className="font-semibold">{t.nav.products}</span>
           </Link>
 
           {/* Mobile Menu Button */}

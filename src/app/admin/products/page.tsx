@@ -86,7 +86,7 @@ function AdminProductsContent() {
           </Link>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900">Gestão de Inventário</h1>
           <p className="text-xs text-gray-500 mt-0.5">
-            {products.length} artigos registados no armazém em Bissau
+            {products.length} produtos na sua montra
           </p>
         </div>
 
@@ -108,7 +108,7 @@ function AdminProductsContent() {
                 <th className="pb-3 px-2">Artigo</th>
                 <th className="pb-3 px-2">Categoria</th>
                 <th className="pb-3 px-2">Preço (XOF)</th>
-                <th className="pb-3 px-2">Stock em Armazém</th>
+                <th className="pb-3 px-2">Disponibilidade</th>
                 <th className="pb-3 px-2">Destaque</th>
                 <th className="pb-3 px-2 text-right">Ação</th>
               </tr>
@@ -199,7 +199,7 @@ function AdminProductsContent() {
                   <Check className="w-8 h-8" />
                 </div>
                 <h4 className="font-bold text-gray-900 text-lg">Produto Cadastrado com Sucesso!</h4>
-                <p className="text-xs text-gray-500">O artigo já está visível na loja e pronto para venda.</p>
+                <p className="text-xs text-gray-500">O produto já está visível no catálogo.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 text-xs">

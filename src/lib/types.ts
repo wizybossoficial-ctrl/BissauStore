@@ -22,36 +22,4 @@ export interface Product {
   vendorEmail?: string; // owner seller; records without it belong to the main seller
 }
 
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
-
-export type PaymentMethod = 'whatsapp' | 'cod';
-
-export type OrderStatus = 'pending' | 'paid' | 'processing' | 'in_delivery' | 'completed' | 'cancelled';
-
-export interface DeliveryAddress {
-  fullName: string;
-  phone: string; // Guinea-Bissau phone (+245)
-  secondaryPhone?: string;
-  bairro: string; // Neighborhood in Bissau
-  landmark: string; // Description/Reference point
-  notes?: string;
-}
-
-export interface Order {
-  id: string;
-  items: CartItem[];
-  totalAmount: number;
-  deliveryFee: number;
-  deliveryAddress: DeliveryAddress;
-  paymentMethod: PaymentMethod;
-  paymentStatus: 'pending' | 'successful' | 'failed';
-  paymentReference?: string;
-  orderStatus: OrderStatus;
-  createdAt: string;
-  vendorEmails?: string[]; // sellers whose products are in this order
-}
-
 export type Language = 'pt' | 'en';

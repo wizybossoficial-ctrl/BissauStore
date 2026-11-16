@@ -1,28 +1,6 @@
-import { Product, Order } from './types';
+import { Product } from './types';
 
 export const DEFAULT_VENDOR_EMAIL = 'vendas@bissaustore.gw';
-
-export const BISSAU_BAIRROS = [
-  'Bissau Velho',
-  'Praça dos Heróis',
-  'Bandim (Mercado)',
-  'Santa Luzia',
-  'Pluba',
-  'Cupilon',
-  'Bairro Militar',
-  'Cuntum Madina',
-  'Aeroporto / Bissalanca',
-  'Antula',
-  'Brá',
-  'Háfia',
-  'Mindará',
-  'Chão de Papel / Varela',
-  'Bairro de Ajuda',
-  'Belém',
-  'Ilha de Bissau',
-  'Safim (Arredores)',
-  'Prabis (Arredores)',
-];
 
 const SEED_PRODUCTS: Product[] = [
   {
@@ -61,8 +39,8 @@ const SEED_PRODUCTS: Product[] = [
     id: 'prod-3',
     name: 'Arroz Pato Real / Perfumado (Saco de 50kg)',
     nameEn: 'Premium Fragrant Jasmine Rice (50kg Bag)',
-    description: 'Arroz de qualidade superior para a sua família. Grãos longos, limpos e aromáticos. Entrega direta no seu bairro em Bissau.',
-    descriptionEn: 'High quality rice for your family. Long grain, clean and aromatic. Direct delivery to your neighborhood in Bissau.',
+    description: 'Arroz de qualidade superior para a sua família. Grãos longos, limpos e aromáticos.',
+    descriptionEn: 'High quality rice for your family. Long grain, clean and aromatic.',
     price: 24500,
     category: 'alimentacao',
     image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
@@ -319,69 +297,3 @@ export const POPULAR_BRANDS: Record<string, string[]> = {
   gaming: ['Sony (PlayStation)', 'Microsoft (Xbox)', 'Nintendo'],
   audio_wearables: ['Apple', 'JBL', 'Sony', 'Samsung'],
 };
-
-const SEED_ORDERS: Order[] = [
-  {
-    id: 'GB-91402',
-    items: [
-      { product: INITIAL_PRODUCTS[0], quantity: 1 },
-      { product: INITIAL_PRODUCTS[1], quantity: 1 },
-    ],
-    totalAmount: 124500,
-    deliveryFee: 1500,
-    deliveryAddress: {
-      fullName: 'Bacari Sanhá',
-      phone: '+245 955 123 456',
-      bairro: 'Bandim (Mercado)',
-      landmark: 'Em frente ao restaurante O Pescador',
-    },
-    paymentMethod: 'whatsapp',
-    paymentStatus: 'successful',
-    paymentReference: 'WA-245-89104',
-    orderStatus: 'in_delivery',
-    createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-  },
-  {
-    id: 'GB-88219',
-    items: [
-      { product: INITIAL_PRODUCTS[2], quantity: 2 },
-      { product: INITIAL_PRODUCTS[3], quantity: 1 },
-    ],
-    totalAmount: 57000,
-    deliveryFee: 1500,
-    deliveryAddress: {
-      fullName: 'Aissatu Djaló',
-      phone: '+245 966 789 123',
-      bairro: 'Santa Luzia',
-      landmark: 'Próximo à bomba de combustível Galp',
-    },
-    paymentMethod: 'whatsapp',
-    paymentStatus: 'successful',
-    paymentReference: 'WA-GB-4421',
-    orderStatus: 'processing',
-    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-  },
-  {
-    id: 'GB-74201',
-    items: [
-      { product: INITIAL_PRODUCTS[5], quantity: 1 },
-    ],
-    totalAmount: 36500,
-    deliveryFee: 1500,
-    deliveryAddress: {
-      fullName: 'Domingos Pereira',
-      phone: '+245 955 882 104',
-      bairro: 'Bissau Velho',
-      landmark: 'Rua Lisboa, perto do Porto de Bissau',
-    },
-    paymentMethod: 'cod',
-    paymentStatus: 'pending',
-    orderStatus: 'pending',
-    createdAt: new Date(Date.now() - 3600000 * 20).toISOString(),
-  },
-];
-
-export const INITIAL_ORDERS: Order[] = SEED_ORDERS.map((o) => ({
-  ...o,
-  vendorEmails: o.vendorEmails ?? [DEFAULT_VENDOR_EMAIL],
-}));

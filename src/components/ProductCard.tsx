@@ -1,34 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@/lib/types';
+import { INITIAL_PRODUCTS } from '@/lib/data';
 import { useStore } from '@/context/StoreContext';
 import { formatXOF } from '@/lib/formatters';
-import { ShoppingBag, Star, MessageCircle, Check } from 'lucide-react';
+import { Star, MessageCircle } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { language, t, addToCart } = useStore();
-  const [added, setAdded] = useState(false);
+  const { language, t } = useStore();
 
   const title = language === 'pt' ? product.name : product.nameEn;
   const description = language === 'pt' ? product.description : product.descriptionEn;
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(product, 1);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
-  };
+  const hasStaticDetailPage = INITIAL_PRODUCTS.some((item) => item.id === product.id);
+  const detailHref = hasStaticDetailPage
+    ? `/products/${product.id}`
+    : `/products?product=${encodeURIComponent(product.id)}`;
 
   const whatsappMessage = encodeURIComponent(
-    `Olá BissauStore! Quero encomendar este produto: ${title} (${formatXOF(product.price)}). Como posso receber no meu bairro em Bissau?`
+    `Olá BissauStore! Tenho interesse em ${title}, anunciado por ${formatXOF(product.price)}. Está disponível?`
   );
 
   return (
@@ -41,7 +37,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       )}
 
       {/* Product Image */}
-      <Link href={`/products/${product.id}`} className="relative h-48 sm:h-52 w-full bg-gray-50 overflow-hidden block">
+      <Link href={detailHref} className="relative h-48 sm:h-52 w-full bg-gray-50 overflow-hidden block">
         <Image
           src={product.image}
           alt={title}
@@ -67,7 +63,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Title */}
-          <Link href={`/products/${product.id}`}>
+          <Link href={detailHref}>
             <h3 className="font-semibold text-gray-900 text-sm line-clamp-2 group-hover:text-brand-orange transition">
               {title}
             </h3>
@@ -96,40 +92,15 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
 
-        {/* Buttons */}
-        <div className="grid grid-cols-2 gap-2 pt-1">
-          {/* Add to Cart */}
-          <button
-            onClick={handleAddToCart}
-            className={`py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition ${
-              added
-                ? 'bg-emerald-600 text-white'
-                : 'bg-brand-orange hover:bg-orange-600 text-white shadow-sm'
-            }`}
-          >
-            {added ? (
-              <>
-                <Check className="w-3.5 h-3.5" />
-                <span>Adicionado!</span>
-              </>
-            ) : (
-              <>
-                <ShoppingBag className="w-3.5 h-3.5" />
-                <span>Carrinho</span>
-              </>
-            )}
-          </button>
-
-          {/* WhatsApp Direct Order */}
+        <div className="pt-1">
           <a
             href={`https://wa.me/245955000000?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="py-2 px-2 rounded-xl text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 flex items-center justify-center gap-1 transition"
+            className="py-2.5 px-3 rounded-xl text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 flex items-center justify-center gap-2 transition"
           >
-            <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="text-[11px]">WhatsApp</span>
+            <MessageCircle className="w-4 h-4 text-emerald-600" />
+            <span>Inquirir via WhatsApp</span>
           </a>
         </div>
       </div>
